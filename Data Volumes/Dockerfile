@@ -8,7 +8,10 @@ RUN npm install
 
 COPY . .
 
-ENV PORT 80
+# You can change the value of the "DEFAULT_PORT" with the --build-arg flag to build different images from the same source code.
+ARG DEFAULT_PORT=80
+
+ENV PORT $DEFAULT_PORT
 
 EXPOSE $PORT
 
