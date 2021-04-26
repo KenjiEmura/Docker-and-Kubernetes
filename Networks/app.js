@@ -68,7 +68,7 @@ app.get('/people', async (req, res) => {
 });
 
 
-// Test
+// Test 2
 
 mongoose.connect(
   'mongodb://mongodb/swfavorites',
