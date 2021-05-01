@@ -4,6 +4,9 @@ services:
   server:
     container_name: nginx
     image: "nginx:stable-alpine"
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.nginx
     ports:
       - "8000:80"
     volumes:
@@ -16,8 +19,8 @@ services:
   php:
     container_name: php
     build:
-      context: dockerfiles
-      dockerfile: Dockerfile.php
+      context: .
+      dockerfile: dockerfiles/Dockerfile.php
     volumes:
       - ./src:/var/www/html:delegated
 
@@ -37,5 +40,19 @@ services:
     volumes:
       - ./src:/var/www/html
 
-  # laravelArtisan:
-  # npm:
+  artisan:
+    container_name: artisan
+    build:
+      context: dockerfiles
+      dockerfile: Dockerfile.php
+    volumes:
+      - ./src:/var/www/html
+    entrypoint: ["php", "/var/www/html/artisan"]
+
+  npm:
+    container_name: node
+    image: node:14
+    working_dir: /var/www/html
+    entrypoint: ["npm"]
+    volumes:
+      - ./src:/var/www/html
