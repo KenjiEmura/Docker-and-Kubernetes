@@ -1,0 +1,63 @@
+version: "3.8"
+
+# Fist level of "services" corresponds to the containers
+services:
+
+  mongodb:
+    container_name: mongodb
+    image: "mongo"
+    volumes:
+      - data:/data/db
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=kenji
+    #   - MONGO_INITDB_ROOT_USERNAME=kenji
+    #   ----------------------------------
+    #   MONGO_INITDB_ROOT_USERNAME: kenji
+    #   MONGO_INITDB_ROOT_PASSWORD: secret
+    #   ----------------------------------
+    env_file:
+      - ./env/mongo.env
+    # networks:
+    #   - goals-network
+
+  backend:
+    container_name: backend
+    build:
+      context: backend
+      dockerfile: Dockerfile.local_dev_env
+      # args:
+      #   some-arg: 1
+    ports:
+      - 80:80
+      # - ...
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app
+      - /app/node_modules
+    env_file: 
+      ./env/backend.env
+    depends_on:
+      - mongodb
+      # - ...
+
+  frontend:
+    container_name: frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile.local_dev_env
+      # args:
+      #   some-arg: 1
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/src:/app/src
+    # tty makes the container to keep the terminal internally open
+    tty: true
+    # stdin_open makes the terminal interactive
+    stdin_open: true
+    depends_on:
+      - backend
+
+volumes:
+  data:
+  logs:
