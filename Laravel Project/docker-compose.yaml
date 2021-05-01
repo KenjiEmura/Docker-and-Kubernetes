@@ -43,8 +43,8 @@ services:
   artisan:
     container_name: artisan
     build:
-      context: dockerfiles
-      dockerfile: Dockerfile.php
+      context: .
+      dockerfile: dockerfiles/Dockerfile.php
     volumes:
       - ./src:/var/www/html
     entrypoint: ["php", "/var/www/html/artisan"]
