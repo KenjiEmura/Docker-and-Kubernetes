@@ -11,6 +11,9 @@ por lo cual Docker los inicia automáticamente
 --build hace que el docker-compose re evalúe si algún Dockerfile de algún servicio ha cambiado, y si es así,
 se vuelven a construir las imágenes automáticamente.
 
+## Destroy the containers
+```docker-compose down -v```
+
 ## Run artisan commands:
 
 ```docker-compose run --rm artisan migrate```
