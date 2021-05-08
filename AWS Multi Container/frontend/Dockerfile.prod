@@ -1,0 +1,39 @@
+# This is the image that will be used to deploy the frontend
+
+# You can build this image with the next command:
+# docker build -t kenjiemura/goals-react -f Dockerfile.prod .
+
+FROM node:14-alpine as build
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+# A new "FROM" creates a new step or stage inside the Docker file, if we didn't
+# assing an "as" to the previous "FROM" statement, everything will be overridden
+# You can use another stage to run tests for example
+
+FROM nginx:stable-alpine
+
+# We need to copy the files "produced" on the previous stage (the build stage),
+# we indicate from which "stage" using --from=, then we need to specify which folder
+# of that "stage" we need to copy. In this case is the /app/build folder because
+# that's where React puts the files when you run "npm run build", so this "from" folder
+# will depend on which framework are you using.
+
+# The second parameter is the destination folder, and since we are using nginx, the
+# code to be served must be placed inside /usr/share/nginx/html, this also depends on
+# what technology you are using and you should check the documentation to know which folder
+# you should copy your files into.
+
+COPY --from=build /app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

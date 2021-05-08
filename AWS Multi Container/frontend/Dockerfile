@@ -1,3 +1,5 @@
+# This is the image that will be used to build the development environment
+
 FROM node
 
 WORKDIR /app
