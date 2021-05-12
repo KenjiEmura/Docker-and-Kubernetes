@@ -4,10 +4,22 @@ metadata:
   name: second-app-deployment
 spec:
   replicas: 1
+  # The deployment detects which pods to control using the 'selector' option 
+  # inside the 'selector', we can matchLabels or we can matchExpressions, but
+  # the expressions are more complex than the labels, so we are using labels.
+  selector:
+    matchLabels:
+      # Including 2 or more matching labels means that the deployment will controll
+      # only the pods that have the 'app' AND the 'new-sample-lable', those pods with
+      # only one lable or different labeld values, WILL NOT be controlled by this deployment.
+      app: second-app
+      new-sample-lable: my-new-sample-lable
   template:
     metadata:
       labels:
         app: second-app
+        new-sample-lable: my-new-sample-lable
+        # ... : ...
     spec:
       containers:
         - name: second-node
