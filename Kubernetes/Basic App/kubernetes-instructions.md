@@ -1,3 +1,4 @@
+# Imperative approach
 # How to start playing around with this project with kubernetes
 
 - Install minikube and kubectl
@@ -35,6 +36,9 @@ You can check the status of the pods in the minikube dashboard or by running ```
 This command means that the Pod is going to be running 3 times.
 If you run ```kubectl get pods``` you will see that you have your previous pod and 2 new ones
 
+
+
+
 # To update a deployment with a new image:
 
 Build the image and push it using a different tag, in this case this is the command that we ran:
@@ -46,3 +50,23 @@ Then run the next command:
 
 And check the status with the next command:
 ```kubectl rollout status deployment/first-app```
+
+
+
+
+# Check the history of updates and rollback to another deployment
+
+Check the history with the next command:
+```kubectl rollout history deployment/first-app```
+
+Check a specific deployment with the --revision flag:
+```kubectl rollout history deployment/first-app --revision=3```
+
+Rollback to the latest working revision (working deployment):
+```kubectl rollout undo deployment/first-app```
+
+Rollback to a specific revision:
+```kubectl rollout undo deployment/first-app --to-revision=1```
+
+# Delete the deployment:
+```kubectl delete deployment first-app```
