@@ -4,18 +4,11 @@ metadata:
   name: second-app-deployment
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: second-app
-      tier: backend
   template:
-    metadata: 
+    metadata:
       labels:
         app: second-app
-        tier: backend
-    spec: 
+    spec:
       containers:
         - name: second-node
-          image: academind/kub-first-app:2
-        # - name: ...
-        #   image: ...
+          image: kenjiemura/kub-first-app
