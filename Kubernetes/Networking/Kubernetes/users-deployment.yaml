@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-deployment
+spec:
+  replicas: 1
+  selector:
+    # matchLabels:
+    #   app: users
+    matchExpressions:
+      - {key: app, operator: In, values: [users]}
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      containers:
+        - name: users
+          image: kenjiemura/kubernetes-demo-users
