@@ -19,7 +19,10 @@ kind: Deployment
 metadata:
   name: story-deployment
 spec:
-  replicas: 1
+  # Replicas are started in a different pod, so for example, if the containers inside a pod are down, the traffic
+  # will be redirected to an available replica (pod) will won't have acces to the emptyDir volume, so instead an emptyDir,
+  # we can use a hostPath, which will allow many pods of the same node worker to access the volume's 'path'
+  replicas: 3
   selector:
     matchExpressions:
       - {key: app, operator: In, values: [story]}
@@ -35,11 +38,18 @@ spec:
           volumeMounts:
             # mountPath is the container's internal path, depends on how the App is written, in this case,
             # the '/story' folder is in the root folder of the app, and since in the Dockerfile we set the
-            # WORKDIR to /app, the path will be /app/story, the docker-compose file also has this same path
+            # WORKDIR to /app, the path will be /app/story, the docker-compose file also has this same path.
             - mountPath: /app/story
             # Using the 'name' property, we specify which Pod's volume we want to use.
               name: story-volume
       volumes:
         - name: story-volume
-          emptyDir: {}
+          # emptyDir: {}
+          hostPath:
+            # Path of the host machine, it's something like a bind mount in Docker, in this case, the /data directory
+            # will be created.
+            path: /data
+            # The type dictates how to handle this directory, in this case will access the folder if it exists, or it will
+            # create it otherwise.
+            type: DirectoryOrCreate
 
