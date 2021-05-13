@@ -1,0 +1,26 @@
+# This is NOT independant from the node and will only work if we have only one worker node
+# Still, the basic concepts here will still apply for different type of persistent volumes
+
+apiVerison: v1
+kind: PersistentVolume
+metadata:
+  name: host-pv
+spec:
+  # Overall volume capacity
+  capacity:
+    # Up to 1Gi of space can be claimed
+    storage: 1Gi
+  # Block of filesystem
+  volumeMode: Filesystem
+  # What should be allowed:
+  accessModes:
+    # The volume can be mounted by a single work node, can be done by multiple pods, but always on the same node
+    # This is the only access mode that the hostPath supports
+    - ReadWriteOnce
+    # # ReadOnlyMany and ReadWriteMany, makes the volume be available to be claimed by multiple nodes (Not available on hostPath)
+    # - ReadOnlyMany
+    # - ReadWriteMany
+  # Here we are defining the type of volume are we going to use
+  hostPath:
+    path: /data
+    type: DirectoryOrCreate
