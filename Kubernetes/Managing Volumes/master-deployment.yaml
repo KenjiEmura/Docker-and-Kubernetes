@@ -31,3 +31,15 @@ spec:
       containers:
         - name: story
           image: kenjiemura/kubernetes-story-app
+          # imagePullPolicy: Always
+          volumeMounts:
+            # mountPath is the container's internal path, depends on how the App is written, in this case,
+            # the '/story' folder is in the root folder of the app, and since in the Dockerfile we set the
+            # WORKDIR to /app, the path will be /app/story, the docker-compose file also has this same path
+            - mountPath: /app/story
+            # Using the 'name' property, we specify which Pod's volume we want to use.
+              name: story-volume
+      volumes:
+        - name: story-volume
+          emptyDir: {}
+
