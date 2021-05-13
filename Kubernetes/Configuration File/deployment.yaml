@@ -13,12 +13,12 @@ spec:
       # only the pods that have the 'app' AND the 'new-sample-label', those pods with
       # only one label or different label values, WILL NOT be controlled by this deployment.
       app: second-app
-      new-sample-lable: my-new-sample-lable
+      new-sample-label: my-new-sample-label
   template:
     metadata:
       labels:
         app: second-app
-        new-sample-lable: my-new-sample-lable
+        new-sample-label: my-new-sample-label
         # ... : ...
     spec:
       containers:

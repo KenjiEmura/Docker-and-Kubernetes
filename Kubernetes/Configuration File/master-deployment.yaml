@@ -29,12 +29,12 @@ spec:
   selector:
     matchLabels:
       app: second-app
-      new-sample-lable: my-new-sample-lable
+      new-sample-label: my-new-sample-label
   template:
     metadata:
       labels:
         app: second-app
-        new-sample-lable: my-new-sample-lable
+        new-sample-label: my-new-sample-label
         # ... : ...
     spec:
       containers:
