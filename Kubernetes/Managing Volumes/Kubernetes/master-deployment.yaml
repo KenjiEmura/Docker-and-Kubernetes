@@ -11,7 +11,7 @@ spec:
     - protocol: "TCP"
       port: 80
       targetPort: 3000
-  type: LoadBalancer
+  type: LoadBalancer # There is also ClusterIP (default) and NodePort
 
 ---
 
