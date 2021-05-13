@@ -34,3 +34,18 @@ spec:
       containers:
         - name: second-node
           image: kenjiemura/kub-first-app
+          # Image Pull Policy Always will force kubernetes to ALWAYS pull the specified image, so for example
+          # if we don't want to manage tags and always work with the same image name, we could do that by making Kubernetes
+          # always pull the image, because remember that if we change the image and push it to Docker Hub, by default
+          # Kubernetes is going to work with the image that it has stored locally, so imagePullPolicy: Always, will prevent that behaviour.
+          imagePullPolicy: Always
+          # How kubernetes should check if the container is live and running
+          livenessProbe:
+            httpGet:
+              path: /
+              # Port exposed from inside the application (app.js line 16)
+              port: 8080
+            # How often should the check should be performed
+            periodSeconds: 10
+            # How long should Kubernetes wait since the start to perform the initial check
+            initialDelaySeconds: 5
