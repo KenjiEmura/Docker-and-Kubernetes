@@ -1,0 +1,42 @@
+# This is how you "stack" all the config files into a single configuration file
+# To separate the yaml objects (configuration files) you should add --- between them
+# To se more detailed information about what is inside each configuration, go to the
+# individual configuration files
+
+# It is a good practice to put the services first, because the "listeners" of which resources
+# should be monitored will be created first
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: second-app
+  ports:
+    - protocol: "TCP"
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: second-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: second-app
+      new-sample-lable: my-new-sample-lable
+  template:
+    metadata:
+      labels:
+        app: second-app
+        new-sample-lable: my-new-sample-lable
+        # ... : ...
+    spec:
+      containers:
+        - name: second-node
+          image: kenjiemura/kub-first-app:2
