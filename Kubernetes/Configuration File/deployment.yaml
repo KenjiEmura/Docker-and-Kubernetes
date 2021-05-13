@@ -2,18 +2,28 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: second-app-deployment
+  # You can also add labels to make resources easier to select
+  # Labels can be applied even when the resources are created
+  labels:
+    sample-group-label: group-1
 spec:
   replicas: 1
-  # The deployment detects which pods to control using the 'selector' option 
-  # We can matchLabels or we can matchExpressions, but the expressions are
-  # more complex than the labels, so we are using labels.
+  # The deployment detects which pods to control using the 'selector' option
+  # The selector CAN NOT be changed once the resources were created, if you want to change the way the resources
+  # are selected, you will have to delete everything and then apply the configurations.
   selector:
-    matchLabels:
-      # Including 2 or more matching labels means that the deployment will controll
-      # only the pods that have the 'app' AND the 'new-sample-label', those pods with
-      # only one label or different label values, WILL NOT be controlled by this deployment.
-      app: second-app
-      new-sample-label: my-new-sample-label
+    # matchLabels:
+    #   # Including 2 or more matching labels means that the deployment will controll
+    #   # only the pods that have the 'app' AND the 'new-sample-label', those pods with
+    #   # only one label or different label values, WILL NOT be controlled by this deployment.
+    #   app: second-app
+    #   new-sample-label: my-new-sample-label
+    matchExpressions:
+      # The 'key' will be the label name, the operator is the logical operation that should be performed,
+      # the values are the range in which the logic should be applied, so in this example, the condition
+      # should be read like this: "Grab all the resources which have an app label key and which value is
+      # second-app or first-app"
+      - {key: app, operator: In, values: [second-app, first-app]}
   template:
     metadata:
       labels:

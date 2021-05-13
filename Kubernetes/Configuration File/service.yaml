@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: backend
+  labels:
+    sample-group-label: group-1
 spec:
   # The selector inside a service configuration file works only with matchLabels, so there is no need
   # to specify that as we did on the deployment configuration file, but unlike the deployment file, here

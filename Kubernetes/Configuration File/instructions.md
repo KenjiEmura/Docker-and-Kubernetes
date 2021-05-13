@@ -19,3 +19,7 @@ Simply make the changes you need inside the configuration files and run the appl
 
 # Deleting resources:
 ```kubectl delete -f=deployment.yaml,service.yaml```
+
+You can also select which resources to delete based on their labels, for example:
+```kubectl delete deployments,services -l sample-group-label=group-1```
+So this will be read like: "delete all the deployments and services that have a label "sample-group-label" with value of "group-1"

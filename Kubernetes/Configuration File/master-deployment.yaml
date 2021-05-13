@@ -9,6 +9,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: backend
+  labels:
+    sample-group-label: group-1
 spec:
   selector:
     app: second-app
@@ -24,12 +26,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: second-app-deployment
+  labels:
+    sample-group-label: group-1
 spec:
   replicas: 1
   selector:
-    matchLabels:
-      app: second-app
-      new-sample-label: my-new-sample-label
+    matchExpressions:
+      - {key: app, operator: In, values: [first-app, second-app]}
   template:
     metadata:
       labels:
