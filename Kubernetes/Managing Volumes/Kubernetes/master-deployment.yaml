@@ -34,7 +34,16 @@ spec:
     spec:
       containers:
         - name: story
-          image: kenjiemura/kubernetes-story-app
+          image: kenjiemura/kubernetes-story-app:2
+          # Here we will set our environment variables
+          env:
+            - name: STORY_FOLDER
+              valueFrom:
+                configMapKeyRef:
+                  # Name of the ConfigMap resource (environment.yaml line 6)
+                  name: data-store-env
+                  # Which key from that file (environment.yaml) should we use
+                  key: folder
           # imagePullPolicy: Always
           volumeMounts:
             # mountPath is the container's internal path, depends on how the App is written, in this case,

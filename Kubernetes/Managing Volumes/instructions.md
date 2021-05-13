@@ -6,6 +6,8 @@ If you remove a container, the volume will survive, if you remove the pod, by de
 
 That's why we want to use persistent volumes.
 
+
+
 # Persistent volumes:
 
 1. Define the persistent volume's resource
@@ -27,3 +29,19 @@ see the master-deployment.yaml file for more details
 
 5. Apply the updated deployment configuration
 ```kubectl apply -f master-deployment.yaml```
+
+
+
+# Environment Variables:
+
+We could use something like this in the master-deployment.yaml file:
+```
+env:
+  - name: STORY_FOLDER
+    value: "story"
+```
+But instead, it's better to use a ConfigMap resource provided out of the box by Kubernetes. First create the environment.yaml file (name it as you wish)
+then under the 'data' property, add all the key - value pairs that you need. Once you are done with that, apply the configuration to the cluster:
+```kubectl apply -f environment.yaml```
+
+Once the data is 'applied' to our cluster, we can then go to the master-deployment.yaml configuration file and set the 'env:' property like this:
