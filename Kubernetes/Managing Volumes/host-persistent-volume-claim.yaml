@@ -1,0 +1,16 @@
+# Here we will define the claim resource for the persistent volume (Static Provisioning)
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: host-pvc
+spec:
+  # This is Static Provisioning, there is also Dynamic Volume Provisioning, but is an advanced administration topic
+  volumeName: host-pv
+  # The accessModes stablished here, should be included inside the definition of the persistent volume
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 1Gi

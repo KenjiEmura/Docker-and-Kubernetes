@@ -45,12 +45,16 @@ spec:
               name: story-volume
       volumes:
         - name: story-volume
-          # emptyDir: {}
-          hostPath:
-            # Path of the host machine, it's something like a bind mount in Docker, in this case, the /data directory
-            # will be created.
-            path: /data
-            # The type dictates how to handle this directory, in this case will access the folder if it exists, or it will
-            # create it otherwise.
-            type: DirectoryOrCreate
+        # Not persistent hostPath definition: -----------------
+          # # emptyDir: {}
+          # hostPath:
+          #   # Path of the host machine, it's something like a bind mount in Docker, in this case, the /data directory
+          #   # will be created.
+          #   path: /data
+          #   # The type dictates how to handle this directory, in this case will access the folder if it exists, or it will
+          #   # create it otherwise.
+          #   type: DirectoryOrCreate
+        # Persistent hostPath definition: ---------------------
+          persistentVolumeClaim:
+            claimName: host-pvc
 

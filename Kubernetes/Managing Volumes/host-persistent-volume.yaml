@@ -1,7 +1,7 @@
 # This is NOT independant from the node and will only work if we have only one worker node
 # Still, the basic concepts here will still apply for different type of persistent volumes
 
-apiVerison: v1
+apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: host-pv
@@ -12,6 +12,8 @@ spec:
     storage: 1Gi
   # Block of filesystem
   volumeMode: Filesystem
+  # To see what storage class you are using, symply run kubectl get sc
+  storageClassName: standard
   # What should be allowed:
   accessModes:
     # The volume can be mounted by a single work node, can be done by multiple pods, but always on the same node
