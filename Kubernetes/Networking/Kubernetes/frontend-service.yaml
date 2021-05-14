@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    # Remember that 'Service' resource doesn't support matchLabels or matchExpressions
+    app: frontend
+  # The 'type' options are:
+    # ClusterIP (default)
+    # NodePort
+    # LoadBalancer: Exposes the IP to the world and distributes the loads
+  type: LoadBalancer
+  ports:
+    - protocol: "TCP"
+      # Port exposed to the outside
+      port: 80
+      # Port inside the container, defined by the app
+      targetPort: 80
