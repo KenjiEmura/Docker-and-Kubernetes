@@ -15,5 +15,5 @@ spec:
     - protocol: "TCP"
       # Port exposed to the outside
       port: 80
-      # Port inside the container, defined by the app (users-app.js last line)
+      # Port inside the container
       targetPort: 80
