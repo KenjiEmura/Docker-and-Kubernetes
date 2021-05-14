@@ -20,3 +20,13 @@ spec:
               value: "auth-service.default"
             - name: TASKS_FOLDER
               value: "tasks"
+          volumeMounts:
+            # mountPath is the container's internal path, depends on how the App is written, in this case,
+            # the '/tasks' folder is in the root folder of the app, and since in the Dockerfile we set the
+            # WORKDIR to /app, the path will be /app/tasks, the docker-compose file also has this same path.
+            - mountPath: /app/tasks
+            # Using the 'name' property, we specify which Pod's volume we want to use.
+              name: tasks-volume
+      volumes:
+        - name: tasks-volume
+          emptyDir: {}
