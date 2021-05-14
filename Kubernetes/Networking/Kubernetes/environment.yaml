@@ -1,0 +1,10 @@
+# Here we will define all the environment files for the project
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: data-store-env
+data:
+  # Here you put all your key - value pairs that you need
+  auth-address: 10.106.180.255
+  # key: value...

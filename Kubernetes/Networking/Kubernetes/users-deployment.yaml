@@ -16,4 +16,14 @@ spec:
     spec:
       containers:
         - name: users
-          image: kenjiemura/kubernetes-demo-users
+          image: kenjiemura/kubernetes-demo-users:latest
+          env:
+            - name: AUTH_ADDRESS
+              value: "auth-service.default"
+            # - name: AUTH_ADDRESS
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       # Name of the ConfigMap resource
+            #       name: data-store-env
+            #       # Which key from that file (environment.yaml) should we use
+            #       key: auth-address

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deployment
+spec:
+  replicas: 1
+  selector:
+    # matchLabels:
+    #   app: users
+    matchExpressions:
+      - {key: app, operator: In, values: [auth]}
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: kenjiemura/kubernetes-demo-auth:latest
