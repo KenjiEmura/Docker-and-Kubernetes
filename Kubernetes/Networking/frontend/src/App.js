@@ -8,7 +8,8 @@ function App() {
   const [tasks, setTasks] = useState([]);
 
   const fetchTasks = useCallback(function () {
-    fetch('http://192.168.99.100:32140/tasks', {
+    console.log("process.env.REACT_APP_TASKS_ADDRESS: ", process.env.REACT_APP_TASKS_ADDRESS)
+    fetch(`http://${process.env.REACT_APP_TASKS_ADDRESS}/tasks`, {
       headers: {
         'Authorization': 'Bearer abc'
       }
@@ -29,7 +30,7 @@ function App() {
   );
 
   function addTaskHandler(task) {
-    fetch('http://192.168.99.100:32140/tasks', {
+    fetch(`http://${process.env.REACT_APP_TASKS_ADDRESS}/tasks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
