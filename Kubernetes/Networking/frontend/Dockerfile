@@ -8,8 +8,6 @@ RUN npm install
 
 COPY . .
 
-ENV REACT_APP_TASKS_ADDRESS=127.0.0.1:63770
-
 RUN npm run build
 
 FROM nginx:1.19-alpine

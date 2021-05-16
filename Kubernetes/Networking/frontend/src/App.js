@@ -8,8 +8,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
 
   const fetchTasks = useCallback(function () {
-    console.log("process.env.REACT_APP_TASKS_ADDRESS: ", process.env.REACT_APP_TASKS_ADDRESS)
-    fetch(`http://${process.env.REACT_APP_TASKS_ADDRESS}/tasks`, {
+    fetch('/api/tasks', {
       headers: {
         'Authorization': 'Bearer abc'
       }
@@ -30,7 +29,7 @@ function App() {
   );
 
   function addTaskHandler(task) {
-    fetch(`http://${process.env.REACT_APP_TASKS_ADDRESS}/tasks`, {
+    fetch('/api/tasks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
