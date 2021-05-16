@@ -1,3 +1,36 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: efs-storage-class
+provisioner: efs.csi.aws.com
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: efs-pv
+spec:
+  capacity: 
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-storage-class
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-36f64516
+---
+apiVersion: v1
+kind: persistentVolumeClaim
+metadata:
+  name: efs-persistent-volume-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-storage-class
+  resources:
+    requests:
+      storage: 5Gi
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -33,3 +66,10 @@ spec:
               value: 'mongodb+srv://kenji:moshimoshi@kubernetes-demo-app.tvcvu.mongodb.net/users?retryWrites=true&w=majority'
             - name: AUTH_API_ADDRESSS
               value: 'auth-service.default:3000'
+          volumeMounts:
+            - name: efs-volume
+              mountPath: /app/users
+      volumes:
+        - name: efs-volume
+          persistentVolumeClaim:
+            claimName: efs-persistent-volume-claim
