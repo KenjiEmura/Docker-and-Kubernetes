@@ -16,3 +16,9 @@ Kubernetes out of the box, uses a service called CoreDNS, which allows us to use
 by using the name of the service, add a dot (.) and the namespace (namespaces are used to group stuff, it's for large projects). The default
 namespace is default, so for example, to access the auth-service from the users container, in the user's container definition, we can define
 an env variable that holds the auth-service namespace which is "auth-service.default"
+
+# REACT Application (Reverse proxy)
+The react environment variables need a special prefix (`REACT_APP_`) in order to be recognized by React. Notice that since the application will
+be running on the server side, the environment variables only will be applied when the project is being built. That means that 'injecting' dynamic
+code inside the JavaScript files via environment variables won't be the best approach. Instead, what we did was using nginx to redirect the traffic
+to the auto generated domain name of the tasks in the designated port (nginx.config line 5) `tasks-service.default:8000`
